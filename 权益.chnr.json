@@ -4,12 +4,12 @@
   "avatar": "",
   "version": "3.5.7",
   "createdTime": "2022-2-27 22:08:02",
-  "updatedTime": "2022-3-2 15:24:29",
+  "updatedTime": "2022-3-6 18:15:48",
   "dbConns": [],
   "profile": {
     "default": {
       "db": "B7842E84-26BA-43C9-878F-8A1450CB2BF8",
-      "dbConn": "5A6C9600-9CF1-49E7-B9E9-AC84B6F20EBC",
+      "dbConn": "D85150D2-71C3-4FD4-8D5E-C9A443245307",
       "entityInitFields": [
         {
           "defKey": "TENANT_ID",
@@ -11963,10 +11963,20 @@
       "type": "B7842E84-26BA-43C9-878F-8A1450CB2BF8",
       "properties": {
         "driver_class_name": "com.mysql.cj.jdbc.Driver",
-        "url": "jdbc:mysql://localhost:3306/one2more?allowPublicKeyRetrieval=true&characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=UTC",
-        "password": "780412Zzq",
-        "username": "root",
-        "customer_driver": ""
+        "url": "jdbc:mysql://IP地址:端口号/数据库名?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=UTC",
+        "password": "",
+        "username": ""
+      }
+    },
+    {
+      "defKey": "D85150D2-71C3-4FD4-8D5E-C9A443245307",
+      "defName": "localhost",
+      "type": "B7842E84-26BA-43C9-878F-8A1450CB2BF8",
+      "properties": {
+        "driver_class_name": "com.mysql.cj.jdbc.Driver",
+        "url": "jdbc:mysql://IP地址:3306/o2m?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=UTC",
+        "password": "12345678",
+        "username": "root"
       }
     }
   ],

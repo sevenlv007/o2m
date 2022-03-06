@@ -7,7 +7,7 @@ spring:
             # 主库数据源
             master:
                 url: jdbc:mysql://localhost:3306/o2m?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-                username: ROOT
+                username: root
                 password: xxr771127
             # 从库数据源
             slave:
