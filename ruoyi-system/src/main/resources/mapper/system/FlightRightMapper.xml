@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.FlightRightMapper">
+    
+    <resultMap type="FlightRight" id="FlightRightResult">
+        <result property="id"    column="id"    />
+        <result property="productName"    column="product_name"    />
+        <result property="desc"    column="desc"    />
+        <result property="status"    column="status"    />
+        <result property="maxCount"    column="max_count"    />
+        <result property="codeAmount"    column="code_amount"    />
+        <result property="salePrice"    column="sale_price"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="saleStartDate"    column="sale_start_date"    />
+        <result property="saleEndDate"    column="sale_end_date"    />
+        <result property="stock"    column="stock"    />
+        <result property="sourceLimit"    column="source_limit"    />
+        <result property="orderLink"    column="order_link"    />
+        <result property="picture"    column="picture"    />
+        <result property="departureList"    column="departure_list"    />
+        <result property="arriveList"    column="arrive_list"    />
+    </resultMap>
+
+    <sql id="selectFlightRightVo">
+        select id, product_name, `desc`, status, max_count, code_amount, sale_price, start_date, end_date, sale_start_date, sale_end_date, stock, source_limit, order_link, picture, departure_list, arrive_list from flight_right
+    </sql>
+
+    <select id="selectFlightRightList" parameterType="FlightRight" resultMap="FlightRightResult">
+        <include refid="selectFlightRightVo"/>
+        <where>  
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="desc != null  and desc != ''"> and desc = #{desc}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="maxCount != null "> and max_count = #{maxCount}</if>
+            <if test="codeAmount != null "> and code_amount = #{codeAmount}</if>
+            <if test="salePrice != null "> and sale_price = #{salePrice}</if>
+            <if test="startDate != null "> and start_date = #{startDate}</if>
+            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="saleStartDate != null "> and sale_start_date = #{saleStartDate}</if>
+            <if test="saleEndDate != null "> and sale_end_date = #{saleEndDate}</if>
+            <if test="stock != null "> and stock = #{stock}</if>
+            <if test="sourceLimit != null  and sourceLimit != ''"> and source_limit = #{sourceLimit}</if>
+            <if test="orderLink != null  and orderLink != ''"> and order_link = #{orderLink}</if>
+            <if test="picture != null  and picture != ''"> and picture = #{picture}</if>
+            <if test="departureList != null  and departureList != ''"> and departure_list = #{departureList}</if>
+            <if test="arriveList != null  and arriveList != ''"> and arrive_list = #{arriveList}</if>
+        </where>
+    </select>
+    
+    <select id="selectFlightRightById" parameterType="Long" resultMap="FlightRightResult">
+        <include refid="selectFlightRightVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFlightRight" parameterType="FlightRight" useGeneratedKeys="true" keyProperty="id">
+        insert into flight_right
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productName != null">product_name,</if>
+            <if test="desc != null">desc,</if>
+            <if test="status != null">status,</if>
+            <if test="maxCount != null">max_count,</if>
+            <if test="codeAmount != null">code_amount,</if>
+            <if test="salePrice != null">sale_price,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="saleStartDate != null">sale_start_date,</if>
+            <if test="saleEndDate != null">sale_end_date,</if>
+            <if test="stock != null">stock,</if>
+            <if test="sourceLimit != null">source_limit,</if>
+            <if test="orderLink != null">order_link,</if>
+            <if test="picture != null">picture,</if>
+            <if test="departureList != null">departure_list,</if>
+            <if test="arriveList != null">arrive_list,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productName != null">#{productName},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="status != null">#{status},</if>
+            <if test="maxCount != null">#{maxCount},</if>
+            <if test="codeAmount != null">#{codeAmount},</if>
+            <if test="salePrice != null">#{salePrice},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="saleStartDate != null">#{saleStartDate},</if>
+            <if test="saleEndDate != null">#{saleEndDate},</if>
+            <if test="stock != null">#{stock},</if>
+            <if test="sourceLimit != null">#{sourceLimit},</if>
+            <if test="orderLink != null">#{orderLink},</if>
+            <if test="picture != null">#{picture},</if>
+            <if test="departureList != null">#{departureList},</if>
+            <if test="arriveList != null">#{arriveList},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFlightRight" parameterType="FlightRight">
+        update flight_right
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="maxCount != null">max_count = #{maxCount},</if>
+            <if test="codeAmount != null">code_amount = #{codeAmount},</if>
+            <if test="salePrice != null">sale_price = #{salePrice},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="saleStartDate != null">sale_start_date = #{saleStartDate},</if>
+            <if test="saleEndDate != null">sale_end_date = #{saleEndDate},</if>
+            <if test="stock != null">stock = #{stock},</if>
+            <if test="sourceLimit != null">source_limit = #{sourceLimit},</if>
+            <if test="orderLink != null">order_link = #{orderLink},</if>
+            <if test="picture != null">picture = #{picture},</if>
+            <if test="departureList != null">departure_list = #{departureList},</if>
+            <if test="arriveList != null">arrive_list = #{arriveList},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFlightRightById" parameterType="Long">
+        delete from flight_right where id = #{id}
+    </delete>
+
+    <delete id="deleteFlightRightByIds" parameterType="String">
+        delete from flight_right where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

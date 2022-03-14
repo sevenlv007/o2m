@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS flight_right;
 CREATE TABLE flight_right(
     id INT NOT NULL AUTO_INCREMENT  COMMENT 'id' ,
     product_name VARCHAR(60)    COMMENT '产品名称' ,
-    ·desc· VARCHAR(60)    COMMENT '产品描述信息' ,
+    `desc` VARCHAR(60)    COMMENT '产品描述信息' ,
     status VARCHAR(60)    COMMENT '产品状态' ,
     max_count INT    COMMENT '最大销售数量' ,
     code_amount INT    COMMENT '权益次数' ,
