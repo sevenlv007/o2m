@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('机票权益列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>产品名称：</label>
+                                <input type="text" name="productName"/>
+                            </li>
+                            <li>
+                                <label>产品描述信息：</label>
+                                <input type="text" name="desc"/>
+                            </li>
+                            <li>
+                                <label>最大销售数量：</label>
+                                <input type="text" name="maxCount"/>
+                            </li>
+                            <li>
+                                <label>权益次数：</label>
+                                <input type="text" name="codeAmount"/>
+                            </li>
+                            <li>
+                                <label>销售价格：</label>
+                                <input type="text" name="salePrice"/>
+                            </li>
+                            <li>
+                                <label>权益有效开始日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择权益有效开始日期" name="startDate"/>
+                            </li>
+                            <li>
+                                <label>权益截止兑换时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择权益截止兑换时间" name="endDate"/>
+                            </li>
+                            <li>
+                                <label>销售开始时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择销售开始时间" name="saleStartDate"/>
+                            </li>
+                            <li>
+                                <label>销售结束时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择销售结束时间" name="saleEndDate"/>
+                            </li>
+                            <li>
+                                <label>库存：</label>
+                                <input type="text" name="stock"/>
+                            </li>
+                            <li>
+                                <label>产品来源限制：</label>
+                                <input type="text" name="sourceLimit"/>
+                            </li>
+                            <li>
+                                <label>预定的入口：</label>
+                                <input type="text" name="orderLink"/>
+                            </li>
+                            <li>
+                                <label>宣传图：</label>
+                                <input type="text" name="picture"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:right:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:right:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:right:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:right:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:right:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:right:remove')}]];
+        var prefix = ctx + "system/right";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "机票权益",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'id',
+                    visible: false
+                },
+                {
+                    field: 'productName',
+                    title: '产品名称'
+                },
+                {
+                    field: 'desc',
+                    title: '产品描述信息'
+                },
+                {
+                    field: 'status',
+                    title: '产品状态'
+                },
+                {
+                    field: 'maxCount',
+                    title: '最大销售数量'
+                },
+                {
+                    field: 'codeAmount',
+                    title: '权益次数'
+                },
+                {
+                    field: 'salePrice',
+                    title: '销售价格'
+                },
+                {
+                    field: 'startDate',
+                    title: '权益有效开始日期'
+                },
+                {
+                    field: 'endDate',
+                    title: '权益截止兑换时间'
+                },
+                {
+                    field: 'saleStartDate',
+                    title: '销售开始时间'
+                },
+                {
+                    field: 'saleEndDate',
+                    title: '销售结束时间'
+                },
+                {
+                    field: 'stock',
+                    title: '库存'
+                },
+                {
+                    field: 'sourceLimit',
+                    title: '产品来源限制'
+                },
+                {
+                    field: 'orderLink',
+                    title: '预定的入口'
+                },
+                {
+                    field: 'picture',
+                    title: '宣传图'
+                },
+                {
+                    field: 'departureList',
+                    title: '出发地列表'
+                },
+                {
+                    field: 'arriveList',
+                    title: '目的地列表'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

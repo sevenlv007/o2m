@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('云闪付券码查询列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>传输订单ID：</label>
+                                <input type="text" name="svcTransId"/>
+                            </li>
+                            <li>
+                                <label>云闪付券码种类：</label>
+                                <input type="text" name="couponId"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="state" th:with="type=${@dict.getType('coupon_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>订单号：</label>
+                                <input type="text" name="orderNo"/>
+                            </li>
+                            <li>
+                                <label>礼券商城订单号：</label>
+                                <input type="text" name="giftMallNo"/>
+                            </li>
+                            <li>
+                                <label>订单时间：</label>
+                                <input type="text" name="txnTime"/>
+                            </li>
+                            <li>
+                                <label>券码：</label>
+                                <input type="text" name="couponCode"/>
+                            </li>
+                            <li>
+                                <label>开始时间：</label>
+                                <input type="text" name="effectiveTm"/>
+                            </li>
+                            <li>
+                                <label>截至时间：</label>
+                                <input type="text" name="expireTm"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:coupon:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:coupon:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:coupon:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:coupon:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:coupon:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:coupon:remove')}]];
+        var stateDatas = [[${@dict.getType('coupon_status')}]];
+        var prefix = ctx + "system/coupon";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "云闪付券码查询",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'svcTransId',
+                    title: '传输订单ID'
+                },
+                {
+                    field: 'couponId',
+                    title: '云闪付券码种类'
+                },
+                {
+                    field: 'state',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(stateDatas, value);
+                    }
+                },
+                {
+                    field: 'orderNo',
+                    title: '订单号'
+                },
+                {
+                    field: 'giftMallNo',
+                    title: '礼券商城订单号'
+                },
+                {
+                    field: 'txnTime',
+                    title: '订单时间'
+                },
+                {
+                    field: 'couponCode',
+                    title: '券码'
+                },
+                {
+                    field: 'effectiveTm',
+                    title: '开始时间'
+                },
+                {
+                    field: 'expireTm',
+                    title: '截至时间'
+                },
+                {
+                    field: 'id',
+                    title: '序列号',
+                    visible: false
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>核销</a> ');
+                        //actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DmCouponMapper">
+    
+    <resultMap type="DmCoupon" id="DmCouponResult">
+        <result property="svcTransId"    column="svc_trans_id"    />
+        <result property="couponId"    column="coupon_id"    />
+        <result property="state"    column="state"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="giftMallNo"    column="gift_mall_no"    />
+        <result property="txnTime"    column="txn_time"    />
+        <result property="couponCode"    column="coupon_code"    />
+        <result property="effectiveTm"    column="effective_tm"    />
+        <result property="expireTm"    column="expire_tm"    />
+        <result property="id"    column="id"    />
+    </resultMap>
+
+    <sql id="selectDmCouponVo">
+        select svc_trans_id, coupon_id, state, order_no, gift_mall_no, txn_time, coupon_code, effective_tm, expire_tm, id from dm_coupon
+    </sql>
+
+    <select id="selectDmCouponList" parameterType="DmCoupon" resultMap="DmCouponResult">
+        <include refid="selectDmCouponVo"/>
+        <where>  
+            <if test="svcTransId != null  and svcTransId != ''"> and svc_trans_id = #{svcTransId}</if>
+            <if test="couponId != null  and couponId != ''"> and coupon_id like concat('%', #{couponId}, '%')</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="orderNo != null  and orderNo != ''"> and order_no like concat('%', #{orderNo}, '%')</if>
+            <if test="giftMallNo != null  and giftMallNo != ''"> and gift_mall_no like concat('%', #{giftMallNo}, '%')</if>
+            <if test="txnTime != null  and txnTime != ''"> and txn_time like concat('%', #{txnTime}, '%')</if>
+            <if test="couponCode != null  and couponCode != ''"> and coupon_code = #{couponCode}</if>
+            <if test="effectiveTm != null  and effectiveTm != ''"> and effective_tm like concat('%', #{effectiveTm}, '%')</if>
+            <if test="expireTm != null  and expireTm != ''"> and expire_tm like concat('%', #{expireTm}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDmCouponById" parameterType="Long" resultMap="DmCouponResult">
+        <include refid="selectDmCouponVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDmCoupon" parameterType="DmCoupon" useGeneratedKeys="true" keyProperty="id">
+        insert into dm_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="svcTransId != null">svc_trans_id,</if>
+            <if test="couponId != null">coupon_id,</if>
+            <if test="state != null">state,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="giftMallNo != null">gift_mall_no,</if>
+            <if test="txnTime != null">txn_time,</if>
+            <if test="couponCode != null">coupon_code,</if>
+            <if test="effectiveTm != null">effective_tm,</if>
+            <if test="expireTm != null">expire_tm,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="svcTransId != null">#{svcTransId},</if>
+            <if test="couponId != null">#{couponId},</if>
+            <if test="state != null">#{state},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="giftMallNo != null">#{giftMallNo},</if>
+            <if test="txnTime != null">#{txnTime},</if>
+            <if test="couponCode != null">#{couponCode},</if>
+            <if test="effectiveTm != null">#{effectiveTm},</if>
+            <if test="expireTm != null">#{expireTm},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDmCoupon" parameterType="DmCoupon">
+        update dm_coupon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="svcTransId != null">svc_trans_id = #{svcTransId},</if>
+            <if test="couponId != null">coupon_id = #{couponId},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="giftMallNo != null">gift_mall_no = #{giftMallNo},</if>
+            <if test="txnTime != null">txn_time = #{txnTime},</if>
+            <if test="couponCode != null">coupon_code = #{couponCode},</if>
+            <if test="effectiveTm != null">effective_tm = #{effectiveTm},</if>
+            <if test="expireTm != null">expire_tm = #{expireTm},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDmCouponById" parameterType="Long">
+        delete from dm_coupon where id = #{id}
+    </delete>
+
+    <delete id="deleteDmCouponByIds" parameterType="String">
+        delete from dm_coupon where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
