@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.system.domain.CouponManagerRequest;
 import com.ruoyi.system.domain.DmCoupon;
 import com.ruoyi.system.service.IDmCouponService;
 import com.ruoyi.common.core.controller.BaseController;
@@ -89,8 +90,24 @@ public class DmCouponController extends BaseController
         return toAjax(dmCouponService.insertDmCoupon(dmCoupon));
     }
 
+
+     /**
+     * 批量新增保存云闪付券码查询
+     */
+    @RequiresPermissions("system:coupon:adds")
+    @Log(title = "云闪付券码查询", businessType = BusinessType.INSERT)
+    @PostMapping("/adds")
+    @ResponseBody
+    public AjaxResult addsSave(CouponManagerRequest dmCoupon)
+    {
+        dmCouponService.addCoupons(dmCoupon);
+        return toAjax(1);
+    }
+
+
+
     /**
-     * 修改云闪付券码查询
+     * 修改、核销云闪付券码查询
      */
     @RequiresPermissions("system:coupon:edit")
     @GetMapping("/edit/{id}")
@@ -102,7 +119,7 @@ public class DmCouponController extends BaseController
     }
 
     /**
-     * 修改保存云闪付券码查询
+     * 修改、核销保存云闪付券码查询
      */
     @RequiresPermissions("system:coupon:edit")
     @Log(title = "云闪付券码查询", businessType = BusinessType.UPDATE)
@@ -124,4 +141,6 @@ public class DmCouponController extends BaseController
     {
         return toAjax(dmCouponService.deleteDmCouponByIds(ids));
     }
+
+
 }

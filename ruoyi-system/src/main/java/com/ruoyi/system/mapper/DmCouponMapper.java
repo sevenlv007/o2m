@@ -36,7 +36,7 @@ public interface DmCouponMapper
     public int insertDmCoupon(DmCoupon dmCoupon);
 
     /**
-     * 修改云闪付券码查询-核销
+     * 修改云闪付券码查询-核销？
      *  
      * @param dmCoupon 云闪付券码查询
      * @return 结果

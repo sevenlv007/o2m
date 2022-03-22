@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.DmCoupon;
+import com.ruoyi.system.domain.*;
 
 /**
  * 云闪付券码查询Service接口
@@ -58,4 +59,27 @@ public interface IDmCouponService
      * @return 结果
      */
     public int deleteDmCouponById(Long id);
+
+    /**
+ * Created by fengfeng on 2020/9/18.
+ */
+    CouponResponse fetchCoupon(CouponRequest req);
+
+    ReturnResponse returnCoupon(CouponRequest req);
+
+    QueryResponse queryCoupon(CouponRequest req);
+
+    UsedResponse useCoupon(UsedRequest req);
+
+    UsedResponse unUseCoupon(UnUseRequest req);
+
+    void notice(NoticeRequest type);
+
+    CouponManagerResponse queryCouponLocal(CouponManagerRequest request);
+
+    LoginResponse login(LoginRequest request);
+
+    CouponManagerResponse addCoupons(CouponManagerRequest request);
+
+
 }

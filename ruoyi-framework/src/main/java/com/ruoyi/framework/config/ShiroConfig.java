@@ -291,6 +291,11 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        
+        filterChainDefinitionMap.put("/coupon/fetch", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/coupon/return", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/coupon/query", "anon,captchaValidate");
+        
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         // 系统权限列表
