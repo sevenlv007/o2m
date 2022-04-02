@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HotelDistributeOrderMapper">
+    
+    <resultMap type="HotelDistributeOrder" id="HotelDistributeOrderResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderState"    column="order_state"    />
+        <result property="hotelCode"    column="hotel_code"    />
+        <result property="storeCode"    column="store_code"    />
+        <result property="staffId"    column="staff_id"    />
+        <result property="bdId"    column="bd_id"    />
+        <result property="updatedTime"    column="UPDATED_TIME"    />
+    </resultMap>
+
+    <sql id="selectHotelDistributeOrderVo">
+        select id, order_id, order_state, hotel_code, store_code, staff_id, bd_id, UPDATED_TIME from hotel_distribute_order
+    </sql>
+
+    <select id="selectHotelDistributeOrderList" parameterType="HotelDistributeOrder" resultMap="HotelDistributeOrderResult">
+        <include refid="selectHotelDistributeOrderVo"/>
+        <where>  
+            <if test="orderState != null  and orderState != ''"> and order_state = #{orderState}</if>
+            <if test="hotelCode != null  and hotelCode != ''"> and hotel_code = #{hotelCode}</if>
+            <if test="storeCode != null  and storeCode != ''"> and store_code = #{storeCode}</if>
+            <if test="staffId != null  and staffId != ''"> and staff_id = #{staffId}</if>
+            <if test="bdId != null  and bdId != ''"> and bd_id = #{bdId}</if>
+            <if test="updatedTime != null "> and UPDATED_TIME = #{updatedTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelDistributeOrderById" parameterType="Integer" resultMap="HotelDistributeOrderResult">
+        <include refid="selectHotelDistributeOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHotelDistributeOrder" parameterType="HotelDistributeOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into hotel_distribute_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="orderState != null and orderState != ''">order_state,</if>
+            <if test="hotelCode != null and hotelCode != ''">hotel_code,</if>
+            <if test="storeCode != null">store_code,</if>
+            <if test="staffId != null">staff_id,</if>
+            <if test="bdId != null">bd_id,</if>
+            <if test="updatedTime != null">UPDATED_TIME,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderState != null and orderState != ''">#{orderState},</if>
+            <if test="hotelCode != null and hotelCode != ''">#{hotelCode},</if>
+            <if test="storeCode != null">#{storeCode},</if>
+            <if test="staffId != null">#{staffId},</if>
+            <if test="bdId != null">#{bdId},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelDistributeOrder" parameterType="HotelDistributeOrder">
+        update hotel_distribute_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderState != null and orderState != ''">order_state = #{orderState},</if>
+            <if test="hotelCode != null and hotelCode != ''">hotel_code = #{hotelCode},</if>
+            <if test="storeCode != null">store_code = #{storeCode},</if>
+            <if test="staffId != null">staff_id = #{staffId},</if>
+            <if test="bdId != null">bd_id = #{bdId},</if>
+            <if test="updatedTime != null">UPDATED_TIME = #{updatedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHotelDistributeOrderById" parameterType="Integer">
+        delete from hotel_distribute_order where id = #{id}
+    </delete>
+
+    <delete id="deleteHotelDistributeOrderByIds" parameterType="String">
+        delete from hotel_distribute_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
