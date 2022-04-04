@@ -6,7 +6,7 @@ import com.ruoyi.system.domain.HotelDistributeOrder;
 /**
  * 酒店分销订单Mapper接口
  * 
- * @author ruoyi
+ * @author K7L
  * @date 2022-04-01
  */
 public interface HotelDistributeOrderMapper 

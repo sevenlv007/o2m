@@ -1,7 +1,6 @@
 package com.ruoyi.system.domain;
 
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -10,8 +9,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
 /**
  * 酒店分销订单对象 hotel_distribute_order
  * 
- * @author ruoyi
- * @date 2022-04-01
+ * @author K7L
+ * @date 2022年4月2日
  */
 public class HotelDistributeOrder extends BaseEntity
 {
@@ -44,9 +43,9 @@ public class HotelDistributeOrder extends BaseEntity
     private String bdId;
 
     /** 更新时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date updatedTime;
+   //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "更新时间")
+    private String updatedTime;
 
     public void setId(Integer id) 
     {
@@ -111,12 +110,12 @@ public class HotelDistributeOrder extends BaseEntity
     {
         return bdId;
     }
-    public void setUpdatedTime(Date updatedTime) 
+    public void setUpdatedTime(String updatedTime) 
     {
         this.updatedTime = updatedTime;
     }
 
-    public Date getUpdatedTime() 
+    public String getUpdatedTime() 
     {
         return updatedTime;
     }

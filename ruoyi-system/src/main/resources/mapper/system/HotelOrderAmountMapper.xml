@@ -13,22 +13,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="staffBonus"    column="staff_bonus"    />
         <result property="salery"    column="salery"    />
         <result property="updatedTime"    column="UPDATED_TIME"    />
+        <!-- <association property="hotelDistributeOrder" javaType="com.ruoyi.system.domain.HotelDistributeOrder" > -->
+            <result property="orderState" column="order_state" />
+            <result property="hotelCode"    column="hotel_code"    />
+            <result property="storeCode"    column="store_code"    />
+            <result property="staffId"    column="staff_id"    />
+            <result property="bdId"    column="bd_id"    />
+            <result property="oupdatedTime"    column="O_UPDATED_TIME"    />
+        <!-- </association>  -->
     </resultMap>
 
     <sql id="selectHotelOrderAmountVo">
-        select id, order_id, tag, cost, amount, staff_bonus, salery, UPDATED_TIME from hotel_order_amount
+        select amount.id as id, amount.order_id as order_id, amount.tag as tag, amount.cost as cost, amount.amount as amount, 
+        amount.staff_bonus as staff_bonus,amount.salery as salery, amount.UPDATED_TIME as UPDATED_TIME, o.order_state as order_state, 
+        o.hotel_code as hotel_code, o.store_code as store_code, o.staff_id as staff_id, o.bd_id as bd_id, 
+        o.UPDATED_TIME as O_UPDATED_TIME
+        from hotel_order_amount  as amount, hotel_distribute_order  as o
+        where amount.order_id = o.order_id 
+
+        <!-- select amount.id, amount.order_id, amount.tag tag, amount.cost cost, amount.amount, 
+        amount.staff_bonus,amount.salery, amount.UPDATED_TIME
+        from hotel_order_amount amount -->
+   
+
     </sql>
 
     <select id="selectHotelOrderAmountList" parameterType="HotelOrderAmount" resultMap="HotelOrderAmountResult">
         <include refid="selectHotelOrderAmountVo"/>
-        <where>  
-            <if test="tag != null  and tag != ''"> and tag = #{tag}</if>
-            <if test="cost != null  and cost != ''"> and cost = #{cost}</if>
-            <if test="amount != null  and amount != ''"> and amount = #{amount}</if>
-            <if test="staffBonus != null "> and staff_bonus = #{staffBonus}</if>
-            <if test="salery != null "> and salery = #{salery}</if>
-            <if test="updatedTime != null "> and UPDATED_TIME = #{updatedTime}</if>
-        </where>
+        <!-- <where>   -->
+            <if test="tag != null  and tag != ''"> and amount.tag = #{tag}</if>
+            <if test="cost != null  and cost != ''"> and amount.cost = #{cost}</if>
+            <if test="amount != null  and amount != ''"> and amount.amount = #{amount}</if>
+            <if test="staffBonus != null "> and amount.staff_bonus = #{staffBonus}</if>
+            <if test="salery != null "> and amount.salery = #{salery}</if>
+            <if test="updatedTime != null "> and amount.UPDATED_TIME like concat('%', #{updatedTime}, '%')</if>
+        <!-- </where> -->
     </select>
     
     <select id="selectHotelOrderAmountById" parameterType="Integer" resultMap="HotelOrderAmountResult">

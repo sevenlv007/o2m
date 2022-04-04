@@ -1,10 +1,13 @@
 package com.ruoyi.system.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.HotelDistributeOrderMapper;
 import com.ruoyi.system.domain.HotelDistributeOrder;
+import com.ruoyi.system.domain.OrderGenerateNum;
 import com.ruoyi.system.service.IHotelDistributeOrderService;
 import com.ruoyi.common.core.text.Convert;
 
@@ -53,7 +56,22 @@ public class HotelDistributeOrderServiceImpl implements IHotelDistributeOrderSer
     @Override
     public int insertHotelDistributeOrder(HotelDistributeOrder hotelDistributeOrder)
     {
-        return hotelDistributeOrderMapper.insertHotelDistributeOrder(hotelDistributeOrder);
+        HotelDistributeOrder order = new HotelDistributeOrder();
+        order.setOrderId(OrderGenerateNum.getInstance().GenerateOrder());   //生成订单号
+        order.setOrderState(hotelDistributeOrder.getOrderState());  //订单状态
+        order.setHotelCode(hotelDistributeOrder.getHotelCode());  
+        order.setStoreCode(hotelDistributeOrder.getStoreCode());
+        order.setStaffId(hotelDistributeOrder.getStaffId());
+        order.setBdId(hotelDistributeOrder.getBdId());
+
+        //获取当前时间
+        Calendar calendar= Calendar.getInstance();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        String date=dateFormat.format(calendar.getTime());
+        order.setUpdatedTime(date);
+
+        return hotelDistributeOrderMapper.insertHotelDistributeOrder(order);
+    
     }
 
     /**

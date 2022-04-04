@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="storeCode != null  and storeCode != ''"> and store_code = #{storeCode}</if>
             <if test="staffId != null  and staffId != ''"> and staff_id = #{staffId}</if>
             <if test="bdId != null  and bdId != ''"> and bd_id = #{bdId}</if>
-            <if test="updatedTime != null "> and UPDATED_TIME = #{updatedTime}</if>
+            <if test="updatedTime != null "> and UPDATED_TIME like concat('%', #{updatedTime}, '%')</if>
         </where>
     </select>
     

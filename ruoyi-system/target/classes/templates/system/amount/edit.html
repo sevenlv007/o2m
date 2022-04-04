@@ -41,9 +41,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">更新时间：</label>
                 <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="updatedTime" th:value="${#dates.format(hotelOrderAmount.updatedTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input name="updatedTime" th:field="*{updatedTime}" class="form-control" type="text" readonly="readonly">
                     </div>
                 </div>
             </div>
